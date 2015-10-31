@@ -6,7 +6,12 @@ var UserModel = require("../models/userModel");
 
 var ActivityController = {
     getActivities: function (startDate, endDate) {
-        return ActivityModel.find().exec();
+        return ActivityModel
+            .find({
+                date: { $gte: startDate || new Date(0), $lte: endDate || new Date(8640000000000000) }
+            })
+            .sort({ date: 1 })
+            .exec();
     },
 
     saveActivity: function (activityData) {

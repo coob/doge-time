@@ -8,7 +8,7 @@ router.get("/", function (req, res) {
 });
 
 router.get("/api/activities", function (req, res) {
-    ActivityController.getActivities().then(
+    ActivityController.getActivities(req.query.from, req.query.to).then(
         function (data) {
             res.json(data);
         },
