@@ -13,7 +13,7 @@ calendar = {
 
 ko.bindingHandlers.datePicker = {
     init: function (element, valueAccessor, allBindingsAccessor) {
-        $(element).datepicker().on('changeDate', function(e) {
+        $(element).datepicker({format: 'dd/mm/yyyy'}).on('changeDate', function(e) {
         	m_site.currentActivity().date(e.date)
         	// console.log(this, e);
         	// return true;
@@ -26,10 +26,10 @@ ko.bindingHandlers.datePicker = {
 
 function Activity (data) {
 	var that = this;
-	this._id = ko.observable(data ? data._id : null);
-	this.name = ko.observable(data ? data.name : '');
-	this.date = ko.observable(data ? data.date : new Date);
-	this.duration = ko.observable(data ? data.duration : '');
+	this._id = ko.observable(data && data._id ? data._id : null);
+	this.name = ko.observable(data && data.name ? data.name : '');
+	this.date = ko.observable(data && data.date ? data.date : new Date);
+	this.duration = ko.observable(data && data.duration ? data.duration : '');
 	this.milestones = ko.observableArray();
 	data.milestones.forEach(function(el){
 		that.milestones.push(ko.observable(el ? el : ''));
@@ -154,7 +154,7 @@ m_site = {
     	data = ko.toJS(m_site.currentActivity());
     	data.milestones = [';(']
     	data.date = moment(data.date).toISOString();
-    	url = '/api/activity'
+    	url = '/api/activity' + (data._id ? '/'+data._id : '');
     	console.log(data);
     	// return true;
 
@@ -174,8 +174,26 @@ m_site = {
             	}
             }
         });
-// $('.status').text('новая запись');
-    // 	m_site.currentActivity(new Activity({name:'', date:'', duration:'', milestones:['']}))
+    },
+    deleteActivity: function(){
+    	data = ko.toJS(m_site.currentActivity());
+    	if (data._id) {
+	    	url = '/api/activity' + '/' + data._id;
+
+	    	$.ajax({
+	            url: url,
+	            cache: false,
+	            method: 'delete',
+	            success: function(data) {
+	            	if (data.err) {
+	            		console.log(data.err)
+	            	} else {
+		                // m_site.mapActivities(data);
+		                window.location.reload();
+	            	}
+	            }
+	        });
+    	}
     }
 
 }
