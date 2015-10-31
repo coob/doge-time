@@ -10,8 +10,6 @@ var ActivityController = {
     },
 
     saveActivity: function (activityData) {
-        console.log("saving activity:", activityData);
-
         if (!activityData) {
             mongoose.Promise.resolve(null);
         }
