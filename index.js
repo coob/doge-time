@@ -21,6 +21,7 @@ const port = nconf.get("port");
 const dbUri = nconf.get("mongoose:uri");
 
 var app = express();
+app.use(express.static('static'));
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(session({
