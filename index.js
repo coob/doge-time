@@ -1,12 +1,18 @@
 var express = require("express");
 var bodyParser = require("body-parser");
+var session = require("express-session");
+var cookieParser = require("cookie-parser");
+var passport = require("passport");
+var LocalStrategy = require('passport-local').Strategy
 var nconf = require("nconf");
 var mongoose = require("mongoose");
 mongoose.Promise = require("bluebird");
 var migrate = require("migrate");
 var chalk = require("chalk");
 
-var router = require("./router");
+var UserModel = require("./models/userModel");
+var activityRoutes = require("./routes/activityRoutes");
+var userRoutes = require("./routes/userRoutes");
 
 nconf.file({
     file: "./settings.json"
@@ -16,7 +22,20 @@ const dbUri = nconf.get("mongoose:uri");
 
 var app = express();
 app.use(bodyParser.json());
-app.use(router);
+app.use(cookieParser());
+app.use(session({
+    secret: "So much mystery",
+    resave: false,
+    saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(activityRoutes);
+app.use(userRoutes);
+
+passport.use(new LocalStrategy(UserModel.authenticate()));
+passport.serializeUser(UserModel.serializeUser());
+passport.deserializeUser(UserModel.deserializeUser());
 
 mongoose.connect(dbUri);
 var db = mongoose.connection;

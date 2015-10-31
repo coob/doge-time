@@ -1,11 +1,7 @@
 var express = require("express");
 var router = express.Router();
 
-var ActivityController = require("./controllers/activityController");
-
-router.get("/", function (req, res) {
-    res.send("Hello World");
-});
+var ActivityController = require("./../controllers/activityController");
 
 var handleError = function (res, error) {
     res.status(500).send("So much error.");
