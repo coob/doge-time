@@ -69,4 +69,17 @@ router.post("/api/activity/:id", function (req, res) {
         );
 });
 
+router.delete("/api/activity/:id", function (req, res) {
+    ActivityController
+        .deleteActivity(req.params.id)
+        .then(
+            function (data) {
+                res.json(data);
+            },
+            function (error) {
+                handleError(res, error);
+            }
+        );
+});
+
 module.exports = router;

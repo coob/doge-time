@@ -52,6 +52,16 @@ var ActivityController = {
         return ActivityModel
             .update({ _id: id }, { $set: data })
             .exec();
+    },
+
+    deleteActivity: function (id) {
+        if (!id) {
+            return mongoose.Promise.resolve(null);
+        }
+
+        return ActivityModel
+            .remove({ _id: id })
+            .exec()
     }
 };
 
