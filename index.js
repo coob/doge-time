@@ -17,6 +17,7 @@ const dbUri = nconf.get("mongoose:uri");
 var app = express();
 app.use(bodyParser.json());
 app.use(router);
+app.use(express.static('static'));
 
 mongoose.connect(dbUri);
 var db = mongoose.connection;

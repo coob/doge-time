@@ -3,10 +3,6 @@ var router = express.Router();
 
 var ActivityController = require("./controllers/activityController");
 
-router.get("/", function (req, res) {
-    res.send("Hello World");
-});
-
 var handleError = function (res, error) {
     res.status(500).send("So much error.");
     throw error;
@@ -25,7 +21,7 @@ router.get("/api/activities", function (req, res) {
         );
 });
 
-router.post("/api/activities", function (req, res) {
+router.post("/api/activity", function (req, res) {
     ActivityController
         .saveActivity({
             date: req.body.date,
