@@ -21,14 +21,15 @@
   },
   "homepage": "https://github.com/coob/doge-time#readme",
   "dependencies": {
-    "body-parser": "^1.14.1",
+    "body-parser": "1.14.1",
     "express": "4.13.3",
-    "migrate": "^0.2.2",
+    "migrate": "0.2.2",
     "mongoose": "4.2.3",
-    "nconf": "^0.8.2",
-    "nodemon": "^1.8.0"
+    "nconf": "0.8.2",
+    "nodemon": "1.8.0",
+    "when": "3.7.4"
   },
   "devDependencies": {
-    "chalk": "^1.1.1"
+    "chalk": "1.1.1"
   }
 }

@@ -2,30 +2,21 @@ var express = require("express");
 var bodyParser = require("body-parser");
 var nconf = require("nconf");
 var mongoose = require("mongoose");
+mongoose.Promise = require("when");
 var migrate = require("migrate");
 var chalk = require("chalk");
 
-var ActivityController = require("./controllers/activityController");
+var router = require("./router");
 
 nconf.file({
     file: "./settings.json"
 });
-
 const port = nconf.get("port");
 const dbUri = nconf.get("mongoose:uri");
 
 var app = express();
-
 app.use(bodyParser.json());
-
-app.get("/", function (req, res) {
-    res.send("Hello World");
-});
-
-app.get("/api/activities", function (req, res) {
-    console.log(ActivityController.getActivities());
-    return res.json(ActivityController.getActivities());
-});
+app.use(router);
 
 mongoose.connect(dbUri);
 var db = mongoose.connection;
