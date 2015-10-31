@@ -95,6 +95,8 @@ m_site = {
         });
     },
     loadCalendar: function(from, to) {
+
+
     	if (from && to) {
     		data = {
     			from: from,
@@ -118,6 +120,78 @@ m_site = {
         });
     },
     mapActivities: function(activities){
+    	activities = [
+    		{
+    			name: '1',
+    			date: moment().add(1, 'd').toISOString(),
+    			milestones: [],
+    			duration: '1 eternity'
+    		},
+    		{
+    			name: '2',
+    			date: moment().add(1, 'd').toISOString(),
+    			milestones: [],
+    			duration: '1 eternity'
+    		},
+    		{
+    			name: '3',
+    			date: moment().subtract(1, 'd').toISOString(),
+    			milestones: [],
+    			duration: '1 eternity'
+    		},
+    		{
+    			name: '4',
+    			date: moment().subtract(1, 'd').toISOString(),
+    			milestones: [],
+    			duration: '1 eternity'
+    		},
+    		{
+    			name: '5',
+    			date: moment().add(2, 'd').toISOString(),
+    			milestones: [],
+    			duration: '1 eternity'
+    		},
+    		{
+    			name: '6',
+    			date: moment().add(3, 'd').toISOString(),
+    			milestones: [],
+    			duration: '1 eternity'
+    		},
+    		{
+    			name: '7',
+    			date: moment().add(3, 'd').toISOString(),
+    			milestones: [],
+    			duration: '1 eternity'
+    		},
+		];
+
+    	activities.sort(function(a, b) { 
+    	    return a.date > b.date;
+    	});
+
+    	var curr = moment(activities[0].date).locale('ru-ru').startOf("week");
+    	var end = moment(activities[activities.length-1].date).locale('ru-ru').endOf("week");
+    	var weeks = [];
+    	var days = [];
+    	while (curr <= end) {
+    		days.push({
+    			date: curr.format('DD MM YYYY'),
+    			activities:	activities.filter(function( obj ) {
+    				console.log(curr.diff( moment(obj.date), 'days' ));
+    		    	return curr.diff( moment(obj.date), 'days' ) == 0;
+    			})
+    		});
+    	    curr.add(1, 'd')
+    	    if (days.length == 7) {
+    	    	weeks.push(days);
+    	    	days = [];
+    	    }
+    	}
+    	m_site.calendar({
+    		weeks: weeks,
+    		from: '1',
+    		to: '2'
+    	});
     	//sort activities by days
     	//sort days by week
     	//populate calendar.weeks
