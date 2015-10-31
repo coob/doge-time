@@ -107,6 +107,9 @@
         </form>
             <div class="form-group">
                 <button class="btn btn-success" data-bind="click: $root.saveActivity">Save</button>
+                <!-- ko if: currentActivity()._id -->
+                    <button class="btn btn-success" data-bind="click: $root.deleteActivity">Delete</button>
+                <!-- /ko -->
             </div>
     </div>
 
