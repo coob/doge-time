@@ -1,0 +1,6 @@
+{
+  "port" : 8556,
+  "mongoose": {
+    "uri": "mongodb://localhost/doge"
+  }
+}

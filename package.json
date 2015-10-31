@@ -4,6 +4,7 @@
   "description": "So much activity",
   "main": "index.js",
   "scripts": {
+    "web-server": "./node_modules/.bin/nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -20,7 +21,14 @@
   },
   "homepage": "https://github.com/coob/doge-time#readme",
   "dependencies": {
+    "body-parser": "^1.14.1",
     "express": "4.13.3",
-    "mongoose": "4.2.3"
+    "migrate": "^0.2.2",
+    "mongoose": "4.2.3",
+    "nconf": "^0.8.2",
+    "nodemon": "^1.8.0"
+  },
+  "devDependencies": {
+    "chalk": "^1.1.1"
   }
 }
